@@ -9,8 +9,8 @@ export const Event: IEvent = {
         if (interaction.isButton() && interaction.customId === 'cancel_job') {
             const job = client.jobs.get(interaction.user.id);
             if (!job) return;
-            job.interaction.deleteReply();
-            return client.jobs.delete(interaction.user.id);
+            client.jobs.delete(interaction.user.id);
+            return job.interaction.deleteReply();
         };
 
         if (!interaction.isCommand() || !interaction.isChatInputCommand()) return;
