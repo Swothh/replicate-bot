@@ -6,7 +6,7 @@ export const Event: IEvent = {
     name: Events.InteractionCreate,
     type: 'on',
     run: async (client, interaction: Interaction) => {
-        if (!interaction.isCommand()) return;
+        if (!interaction.isCommand() || !interaction.isChatInputCommand()) return;
         const command = client.commands.get(interaction.commandName);
         if (!command) return;
 

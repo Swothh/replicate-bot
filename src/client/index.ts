@@ -1,10 +1,13 @@
 import { Client, IntentsBitField, Collection, REST, Routes } from 'discord.js';
-import { ICommand, IEvent } from '@/interfaces';
+import { ICommand, IEvent, IJob } from '../interfaces';
+import Interval from './interval';
 import { glob } from 'glob';
 import { join } from 'path';
 
 export default class Bot extends Client {
     public readonly commands = new Collection<string, ICommand>();
+    public readonly jobs = new Collection<string, IJob>();
+    public interval: NodeJS.Timer;
 
     constructor() {
         super({
@@ -13,6 +16,10 @@ export default class Bot extends Client {
                 IntentsBitField.Flags.GuildMembers
             ]
         });
+
+        this.interval = setInterval(() => (
+            Interval(this)
+        ), 1000);
     };
 
     public async init(): Promise<void> {
@@ -29,7 +36,7 @@ export default class Bot extends Client {
         rest.put(Routes.applicationCommands(this.user.id), {
             body: this.commands.toJSON()
         }).then(() => {
-            console.success('Successfully loaded application (/) commands.');
+            console.success(`Successfully loaded [${this.commands.size}] application (/) commands.`);
         }).catch(err => {
             console.error(err);
             process.exit(1);

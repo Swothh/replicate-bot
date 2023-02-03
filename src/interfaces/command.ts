@@ -1,4 +1,4 @@
-import { CommandInteraction } from 'discord.js';
+import { ChatInputCommandInteraction } from 'discord.js';
 import Bot from '../client';
 
 interface IOption {
@@ -13,5 +13,5 @@ export interface ICommand {
     name: string;
     description: string;
     options?: IOption[],
-    run: (client: Bot, interaction: CommandInteraction) => Promise<any> | any;
+    run: (client: Bot, interaction: ChatInputCommandInteraction) => Promise<any> | any;
 };
