@@ -34,7 +34,7 @@ export const Command: ICommand = {
         });
 
         if (!req?.urls?.get) {
-            embed.setColor('Red').setDescription(':x: **|** Something went wrong.');
+            embed.setColor('Red').setDescription(':x: **|** Something went wrong. (rate-limit)');
             return interaction.followUp({ embeds: [ embed ] });
         };
 
